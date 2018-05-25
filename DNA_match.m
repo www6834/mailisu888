@@ -38,7 +38,7 @@ end
 
 similar = Matrix(a,b) / n;
 
-fprintf('The cost of the DNA is %d.\n', Matrix(a,b));
+fprintf('The cost of the DNA matching is %d.\n', Matrix(a,b));
 fprintf('Divided by their length is %f, and it is less than 5 percent.\n',similar);
 fprintf('Therefore they have the same biological function.\n');
 fclose(data_DNA);
