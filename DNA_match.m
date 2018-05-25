@@ -1,11 +1,13 @@
-data_DNA = fopen('DNA_data.txt','r');
-get_data = fscanf(data_DNA,'%c');
-[s,t] = strtok(get_data);
-t = t(2:end);
+data_DNA1 = fopen('DNA_data1.txt','r');
+s = fscanf(data_DNA1,'%c');
+data_DNA2 = fopen('DNA_data2.txt','r');
+t = fscanf(data_DNA2,'%c');
 n = length(s);
 m = length(t);
 
 Matrix = zeros(n + 1, m + 1);
+
+v = zeros(1,3); 
 
 a = n + 1;
 b = m + 1;
@@ -21,32 +23,19 @@ end
 
 for k = 2:a
     for f = 2:b
-        l = min(Matrix(k-1,f),Matrix(k,f-1));
-        p = min(l,Matrix(k-1,f-1));
-        if k <= f
-            if p == Matrix(k-1,f)
-                Matrix(k,f) = l + 2;
-            elseif p == Matrix(k,f-1)
-                Matrix(k,f) = l + 2;
-            elseif p == Matrix(k-1,f-1)
-                if s(f-1) == t(f-1)
-                    Matrix(k,f) = Matrix(k-1,f-1) + 0;
-                else
-                    Matrix(k,f) = Matrix(k-1,f-1) + 1;
-                end
-            end
-        elseif k > f
-            if p == Matrix(k-1,f)
-                Matrix(k,f) = l + 2;
-            elseif p == Matrix(k,f-1)
-                Matrix(k,f) = l + 2;
-            elseif p == Matrix(k-1,f-1)
-                    Matrix(k,f) = Matrix(k-1,f-1) + 2;
-             end
-        end
+       if s(k-1) == t(f-1)
+          v(1,1) = Matrix(k-1,f-1);
+       else
+          v(1,1) = Matrix(k-1,f-1) + 1;
+       end
+            
+            v(1,2) = Matrix(k-1,f) + 2;
+            v(1,3) = Matrix(k,f-1) + 2;
+        Matrix(k,f) = min(v);
+        
     end
 end
 
-Matrix(1000:1010,1000:1010)
+Matrix(a,b)
 
 fclose(data_DNA);
